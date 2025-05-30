@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "rn-shot",
+    "name": "rn-shop",
     "scheme": "rn-shop",
-    "slug": "rn-shot",
+    "slug": "rn-shop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

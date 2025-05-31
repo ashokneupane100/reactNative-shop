@@ -36,8 +36,8 @@ export const ListHeader = () => {
             style={styles.avatar}
           />
           <View>
-            <Text style={styles.greeting}>Hello!</Text>
-            <Text style={styles.userName}>Code with Ashok N.</Text>
+            <Text style={styles.greeting}>Ecommerce App made By</Text>
+            <Text style={styles.userName}> Ashok Neupane</Text>
           </View>
         </View>
         

@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { ORDERS } from "../../../../assets/orders";
 import { Order, OrderStatus } from "@/assets/types/order";
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 
 const statusDisplayText: Record<OrderStatus, string> = {
   Pending: "Pending",
@@ -38,9 +38,7 @@ const renderItem: ListRenderItem<Order> = ({ item }) => (
           <Text style={styles.orderDetails}>Total: Rs {item.details}</Text>
           <Text style={styles.orderDate}>{item.date}</Text>
         </View>
-        <View
-          style={[styles.statusBadge, getStatusBadgeStyle(item.status)]}
-        >
+        <View style={[styles.statusBadge, getStatusBadgeStyle(item.status)]}>
           <Text style={styles.statusText}>
             {statusDisplayText[item.status]}
           </Text>
@@ -53,6 +51,7 @@ const renderItem: ListRenderItem<Order> = ({ item }) => (
 const Orders = () => {
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{title:"Total Orders",headerShown:true}} />
       <FlatList
         data={ORDERS}
         keyExtractor={(item) => item.id.toString()}

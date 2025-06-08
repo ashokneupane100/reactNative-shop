@@ -17,7 +17,16 @@ const statusDisplayText: Record<OrderStatus, string> = {
   Completed: "Completed",
   Shipped: "Shipped",
   InTransit: "In Transit",
-  
+};
+
+const getStatusBadgeStyle = (status: OrderStatus) => {
+  const statusStyles = {
+    Pending: styles.statusBadge_Pending,
+    Completed: styles.statusBadge_Completed,
+    Shipped: styles.statusBadge_Shipped,
+    InTransit: styles.statusBadge_InTransit,
+  };
+  return statusStyles[status];
 };
 
 const renderItem: ListRenderItem<Order> = ({ item }) => (
@@ -30,7 +39,7 @@ const renderItem: ListRenderItem<Order> = ({ item }) => (
           <Text style={styles.orderDate}>{item.date}</Text>
         </View>
         <View
-          style={[styles.statusBadge, styles[`statusBadge_${item.status}`]]}
+          style={[styles.statusBadge, getStatusBadgeStyle(item.status)]}
         >
           <Text style={styles.statusText}>
             {statusDisplayText[item.status]}
@@ -55,7 +64,7 @@ const Orders = () => {
 
 export default Orders;
 
-const styles: { [key: string]: any } = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,

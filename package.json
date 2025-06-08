@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
+    "@hookform/resolvers": "^5.1.0",
     "expo": "~53.0.9",
     "expo-constants": "~17.1.6",
     "expo-linking": "~7.1.5",
@@ -17,12 +18,14 @@
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-hook-form": "^7.57.0",
     "react-native": "0.79.2",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-toast-message": "^2.3.0",
     "react-native-toast-notifications": "^3.4.0",
     "react-native-web": "^0.20.0",
+    "zod": "^3.25.56",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

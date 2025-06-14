@@ -81,3 +81,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
+
+// starting supabse and nextjs

@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import {
   FlatList,
   Image,
@@ -11,8 +11,11 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { CATEGORIES } from "@/assets/categories";
 import { supabase } from "@/lib/supabase";
+import { useToast } from "react-native-toast-notifications";
+import { Category } from "@/assets/types/category";
 
 export const ListHeader = () => {
+  const toast = useToast();
 
   const renderCategory = ({ item }: { item: any }) => (
     <Link asChild href={`/categories/${item.slug}`}>
@@ -25,10 +28,32 @@ export const ListHeader = () => {
     </Link>
   );
 
-const handleSignOut=async()=>{
-  await supabase.auth.signOut();
-
-}
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast.show("Error signing out: " + error.message, {
+          type: "danger",
+          placement: "top",
+          duration: 3000,
+        });
+      } else {
+        toast.show("Signed out successfully", {
+          type: "success",
+          placement: "top",
+          duration: 2000,
+        });
+        router.replace("/auth");
+      }
+    } catch (err) {
+      toast.show("An unexpected error occurred", {
+        type: "danger",
+        placement: "top",
+        duration: 3000,
+      });
+      console.error("Unexpected error during sign out:", err);
+    }
+  };
 
   return (
     <View style={styles.container}>

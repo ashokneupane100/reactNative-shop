@@ -9,9 +9,9 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Stack } from "expo-router";
+import { Redirect, router, Stack } from "expo-router";
 import { supabase } from "@/lib/supabase";
-import { Toast } from "react-native-toast-notifications";
+import { useToast } from "react-native-toast-notifications";
 
 const authSchema = zod.object({
   email: zod.string().email({ message: "Please enter a valid email address" }),
@@ -29,29 +29,56 @@ export default function Auth() {
     },
   });
 
+  const toast = useToast();
+
   const signIn = async (data: zod.infer<typeof authSchema>) => {
-    const { error } = await supabase.auth.signInWithPassword(data);
-    if (error) {
-      alert(error.message);
-    } else {
-      Toast.show({
-        text1: "Login successful",
-        type: "success",
-        position: "top",
-        duration: 6000,
+    try {
+      const { error } = await supabase.auth.signInWithPassword(data);
+      if (error) {
+        toast.show(error.message, {
+          type: "danger",
+          placement: "top",
+          duration: 3000,
+        });
+      } else {
+        toast.show("Login successful", {
+          type: "success",
+          placement: "top",
+          duration: 2000,
+        });
+
+        router.replace("/");
+        
+      }
+    } catch (error) {
+      toast.show("An unexpected error occurred", {
+        type: "danger",
+        placement: "top",
+        duration: 3000,
       });
     }
   };
 
   const signUp = async (data: zod.infer<typeof authSchema>) => {
-    const { error } = await supabase.auth.signUp(data);
-    if (error) {
-      alert(error.message);
-    } else {
-      Toast.show({
-        text1: "Sign Up successful",
-        type: "success",
-        position: "top",
+    try {
+      const { error } = await supabase.auth.signUp(data);
+      if (error) {
+        toast.show(error.message, {
+          type: "danger",
+          placement: "top",
+          duration: 3000,
+        });
+      } else {
+        toast.show("Sign Up successful", {
+          type: "success",
+          placement: "top",
+          duration: 2000,
+        });
+      }
+    } catch (error) {
+      toast.show("An unexpected error occurred", {
+        type: "danger",
+        placement: "top",
         duration: 3000,
       });
     }

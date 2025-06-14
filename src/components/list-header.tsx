@@ -13,6 +13,7 @@ import { CATEGORIES } from "@/assets/categories";
 import { supabase } from "@/lib/supabase";
 
 export const ListHeader = () => {
+
   const renderCategory = ({ item }: { item: any }) => (
     <Link asChild href={`/categories/${item.slug}`}>
       <Pressable style={styles.categoryItem}>
@@ -23,6 +24,11 @@ export const ListHeader = () => {
       </Pressable>
     </Link>
   );
+
+const handleSignOut=async()=>{
+  await supabase.auth.signOut();
+
+}
 
   return (
     <View style={styles.container}>
@@ -60,12 +66,7 @@ export const ListHeader = () => {
 
           <TouchableOpacity
             style={styles.signOutButton}
-            onPress={async () => {
-              const { error } = await supabase.auth.signOut();
-              if (error) {
-                console.error("Error signing out:", error.message);
-              }
-            }}
+            onPress={handleSignOut}
           >
             <FontAwesome name="sign-out" size={20} color="#ff4444" />
           </TouchableOpacity>
@@ -97,7 +98,7 @@ export const ListHeader = () => {
         <FlatList
           data={CATEGORIES}
           renderItem={renderCategory}
-          keyExtractor={(item) => item.id?.toString() || item.slug}
+          keyExtractor={(item) => item.slug}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.categoriesList}

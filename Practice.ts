@@ -209,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//starting the Login Page from
+//starting the Login Page from logout logic made

@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
-import { PropsWithChildren, useEffect, useState, createContext } from "react";
+import { PropsWithChildren, useEffect, useState, createContext, useContext } from "react";
 
 // Define the AuthData type outside the component
 type AuthData = {
@@ -64,3 +64,5 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     </AuthContext.Provider>
   );
 }
+
+export const useAuth=()=>useContext(AuthContext);

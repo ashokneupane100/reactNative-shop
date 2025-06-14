@@ -1,7 +1,15 @@
-import { Text, View, StyleSheet, ImageBackground, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ImageBackground,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Stack } from "expo-router";
 
 const authSchema = zod.object({
   email: zod.string().email({ message: "Please enter a valid email address" }),
@@ -34,21 +42,25 @@ export default function Auth() {
       }}
       style={styles.backgroundImage}
     >
+      <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.overlay} />
       <View style={styles.container}>
         <Text style={styles.title}>Welcome</Text>
         <Text style={styles.subtitle}>Please authenticate to continue</Text>
 
-        <Controller 
-          control={control} 
-          name="email" 
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+        <Controller
+          control={control}
+          name="email"
+          render={({
+            field: { value, onChange, onBlur },
+            fieldState: { error },
+          }) => (
             <>
-              <TextInput 
-                placeholder="Email" 
-                style={styles.input} 
+              <TextInput
+                placeholder="Email"
+                style={styles.input}
                 value={value}
-                onChangeText={onChange} 
+                onChangeText={onChange}
                 onBlur={onBlur}
                 placeholderTextColor="#aaa"
                 autoCapitalize="none"
@@ -60,16 +72,19 @@ export default function Auth() {
           )}
         />
 
-        <Controller 
-          control={control} 
-          name="password" 
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+        <Controller
+          control={control}
+          name="password"
+          render={({
+            field: { value, onChange, onBlur },
+            fieldState: { error },
+          }) => (
             <>
-              <TextInput 
-                placeholder="Password" 
-                style={styles.input} 
+              <TextInput
+                placeholder="Password"
+                style={styles.input}
                 value={value}
-                onChangeText={onChange} 
+                onChangeText={onChange}
                 onBlur={onBlur}
                 placeholderTextColor="#aaa"
                 autoCapitalize="none"
@@ -82,7 +97,7 @@ export default function Auth() {
         />
 
         {/* Sign In Button */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
           onPress={handleSubmit(signIn)}
           disabled={formState.isSubmitting}
@@ -93,8 +108,8 @@ export default function Auth() {
         </TouchableOpacity>
 
         {/* Sign Up Button */}
-        <TouchableOpacity 
-          style={[styles.button, styles.signUpButton]} 
+        <TouchableOpacity
+          style={[styles.button, styles.signUpButton]}
           onPress={handleSubmit(signUp)}
           disabled={formState.isSubmitting}
         >
@@ -102,8 +117,7 @@ export default function Auth() {
             {formState.isSubmitting ? "Signing Up..." : "Sign Up"}
           </Text>
         </TouchableOpacity>
-
-      </View> 
+      </View>
     </ImageBackground>
   );
 }

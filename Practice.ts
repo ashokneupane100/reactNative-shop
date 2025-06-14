@@ -208,3 +208,5 @@ const styles = StyleSheet.create({
     width: '90%',
   },
 });
+
+//starting the Login Page

@@ -13,7 +13,7 @@ function TabBarIcon(props: {
 }
 
 const TabsLayout = () => {
-  const { session, mounting } = useAuth(); 
+  const { session, mounting } = useAuth();
   // Handle loading and redirect states
   if (mounting) {
     return <ActivityIndicator />;

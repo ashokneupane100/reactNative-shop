@@ -10,6 +10,8 @@ import { useForm, Controller } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack } from "expo-router";
+import { supabase } from "@/lib/supabase";
+import { Toast } from "react-native-toast-notifications";
 
 const authSchema = zod.object({
   email: zod.string().email({ message: "Please enter a valid email address" }),
@@ -27,12 +29,32 @@ export default function Auth() {
     },
   });
 
-  const signIn = (data: zod.infer<typeof authSchema>) => {
-    console.log("Sign In:", data);
+  const signIn = async (data: zod.infer<typeof authSchema>) => {
+    const { error } = await supabase.auth.signInWithPassword(data);
+    if (error) {
+      alert(error.message);
+    } else {
+      Toast.show({
+        text1: "Login successful",
+        type: "success",
+        position: "top",
+        duration: 6000,
+      });
+    }
   };
 
-  const signUp = (data: zod.infer<typeof authSchema>) => {
-    console.log("Sign Up:", data);
+  const signUp = async (data: zod.infer<typeof authSchema>) => {
+    const { error } = await supabase.auth.signUp(data);
+    if (error) {
+      alert(error.message);
+    } else {
+      Toast.show({
+        text1: "Sign Up successful",
+        type: "success",
+        position: "top",
+        duration: 3000,
+      });
+    }
   };
 
   return (

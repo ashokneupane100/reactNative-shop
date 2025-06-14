@@ -10,16 +10,14 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { CATEGORIES } from "@/assets/categories";
+import { supabase } from "@/lib/supabase";
 
 export const ListHeader = () => {
   const renderCategory = ({ item }: { item: any }) => (
     <Link asChild href={`/categories/${item.slug}`}>
       <Pressable style={styles.categoryItem}>
         <View style={styles.categoryImageContainer}>
-          <Image
-            source={{ uri: item.imageUrl }}
-            style={styles.categoryImage}
-          />
+          <Image source={{ uri: item.imageUrl }} style={styles.categoryImage} />
         </View>
         <Text style={styles.categoryText}>{item.name}</Text>
       </Pressable>
@@ -40,7 +38,7 @@ export const ListHeader = () => {
             <Text style={styles.userName}> Ashok Neupane</Text>
           </View>
         </View>
-        
+
         <View style={styles.actionButtons}>
           <Link href="/cart" asChild>
             <Pressable style={styles.cartButton}>
@@ -59,13 +57,21 @@ export const ListHeader = () => {
               )}
             </Pressable>
           </Link>
-          
-          <TouchableOpacity style={styles.signOutButton}>
+
+          <TouchableOpacity
+            style={styles.signOutButton}
+            onPress={async () => {
+              const { error } = await supabase.auth.signOut();
+              if (error) {
+                console.error("Error signing out:", error.message);
+              }
+            }}
+          >
             <FontAwesome name="sign-out" size={20} color="#ff4444" />
           </TouchableOpacity>
         </View>
       </View>
-      
+
       {/* Hero Banner */}
       <View style={styles.heroBanner}>
         <View style={styles.heroContent}>
@@ -77,14 +83,14 @@ export const ListHeader = () => {
           </Pressable>
         </View>
         <View style={styles.heroImageSection}>
-          <Image 
-            source={require("@/assets/images/hero.png")} 
+          <Image
+            source={require("@/assets/images/hero.png")}
             style={styles.heroImage}
             resizeMode="contain"
           />
         </View>
       </View>
-      
+
       {/* Categories */}
       <View style={styles.categoriesSection}>
         <Text style={styles.sectionTitle}>Categories</Text>
@@ -104,10 +110,10 @@ export const ListHeader = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingBottom: 20,
   },
-  
+
   // Header Styles
   header: {
     flexDirection: "row",
@@ -163,7 +169,7 @@ const styles = StyleSheet.create({
   signOutButton: {
     padding: 8,
   },
-  
+
   // Hero Banner Styles
   heroBanner: {
     flexDirection: "row",
@@ -217,7 +223,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
-  
+
   // Categories Styles
   categoriesSection: {
     paddingHorizontal: 20,
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,

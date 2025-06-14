@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Redirect, router, Stack } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "react-native-toast-notifications";
+import { useAuth } from "@/providers/auth-provider";
 
 const authSchema = zod.object({
   email: zod.string().email({ message: "Please enter a valid email address" }),
@@ -21,6 +22,12 @@ const authSchema = zod.object({
 });
 
 export default function Auth() {
+  const{session}=useAuth();
+  if(session){
+    return <Redirect href="/"/>
+  }
+
+
   const { control, handleSubmit, formState } = useForm({
     resolver: zodResolver(authSchema),
     defaultValues: {
